@@ -16,6 +16,7 @@
 package com.haibin.calendarview;
 
 import android.content.Context;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
@@ -57,8 +58,14 @@ public class WeekBar extends LinearLayout {
      * @param color color
      */
     protected void setTextColor(int color) {
+        int color_weekend = 0xFFCC7833;  // 自定义星期栏周末颜色
+        Log.i("chaoyc","WeekBar setTextColor " + color);
         for (int i = 0; i < getChildCount(); i++) {
-            ((TextView) getChildAt(i)).setTextColor(color);
+            if ( i >= 5)  // 周六/日
+                ((TextView) getChildAt(i)).setTextColor(color_weekend);
+            else
+                ((TextView) getChildAt(i)).setTextColor(color); //默认颜色
+
         }
     }
 

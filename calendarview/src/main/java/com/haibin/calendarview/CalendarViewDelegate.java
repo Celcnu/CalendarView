@@ -434,6 +434,8 @@ final class CalendarViewDelegate {
         mWeekBackground = array.getColor(R.styleable.CalendarView_week_background, Color.WHITE);
         mWeekLineBackground = array.getColor(R.styleable.CalendarView_week_line_background, Color.TRANSPARENT);
         mYearViewBackground = array.getColor(R.styleable.CalendarView_year_view_background, Color.WHITE);
+
+        //星期栏默认颜色设置
         mWeekTextColor = array.getColor(R.styleable.CalendarView_week_text_color, 0xFF333333);
 
         mCurDayTextColor = array.getColor(R.styleable.CalendarView_current_day_text_color, Color.RED);
@@ -456,11 +458,11 @@ final class CalendarViewDelegate {
         mMaxYearDay = array.getInt(R.styleable.CalendarView_max_year_day, -1);
 
         mDayTextSize = array.getDimensionPixelSize(R.styleable.CalendarView_day_text_size,
-                CalendarUtil.dipToPx(context, 16));
+                CalendarUtil.dipToPx(context, 16));  // 其余日历能改字体大小 全屏不能
         mLunarTextSize = array.getDimensionPixelSize(R.styleable.CalendarView_lunar_text_size,
-                CalendarUtil.dipToPx(context, 10));
+                CalendarUtil.dipToPx(context, 10)); // 生效
         mCalendarItemHeight = (int) array.getDimension(R.styleable.CalendarView_calendar_height,
-                CalendarUtil.dipToPx(context, 56));
+                CalendarUtil.dipToPx(context, 40));  // 不生效
         isFullScreenCalendar = array.getBoolean(R.styleable.CalendarView_calendar_match_parent, false);
 
         //年视图相关

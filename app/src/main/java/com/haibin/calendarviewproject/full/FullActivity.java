@@ -60,6 +60,7 @@ public class FullActivity extends BaseActivity implements
         mTextYear = findViewById(R.id.tv_year);
         mTextLunar = findViewById(R.id.tv_lunar);
         mTextCurrentDay = findViewById(R.id.tv_current_day);
+
         mCalendarView = findViewById(R.id.calendarView);
         mTextMonthDay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,26 +93,11 @@ public class FullActivity extends BaseActivity implements
         int month = mCalendarView.getCurMonth();
 
         Map<String, Calendar> map = new HashMap<>();
+
+        // TODO 添加事件
         map.put(getSchemeCalendar(year, month, 3, 0xFF40db25, "假").toString(),
                 getSchemeCalendar(year, month, 3, 0xFF40db25, "假"));
-        map.put(getSchemeCalendar(year, month, 6, 0xFFe69138, "事").toString(),
-                getSchemeCalendar(year, month, 6, 0xFFe69138, "事"));
-        map.put(getSchemeCalendar(year, month, 9, 0xFFdf1356, "议").toString(),
-                getSchemeCalendar(year, month, 9, 0xFFdf1356, "议"));
-        map.put(getSchemeCalendar(year, month, 13, 0xFFedc56d, "记").toString(),
-                getSchemeCalendar(year, month, 13, 0xFFedc56d, "记"));
-        map.put(getSchemeCalendar(year, month, 14, 0xFFedc56d, "记").toString(),
-                getSchemeCalendar(year, month, 14, 0xFFedc56d, "记"));
-        map.put(getSchemeCalendar(year, month, 15, 0xFFaacc44, "假").toString(),
-                getSchemeCalendar(year, month, 15, 0xFFaacc44, "假"));
-        map.put(getSchemeCalendar(year, month, 18, 0xFFbc13f0, "记").toString(),
-                getSchemeCalendar(year, month, 18, 0xFFbc13f0, "记"));
-        map.put(getSchemeCalendar(year, month, 22, 0xFFdf1356, "议").toString(),
-                getSchemeCalendar(year, month, 22, 0xFFdf1356, "议"));
-        map.put(getSchemeCalendar(year, month, 25, 0xFF13acf0, "假").toString(),
-                getSchemeCalendar(year, month, 25, 0xFF13acf0, "假"));
-        map.put(getSchemeCalendar(year, month, 27, 0xFF13acf0, "多").toString(),
-                getSchemeCalendar(year, month, 27, 0xFF13acf0, "多"));
+
         //此方法在巨大的数据量上不影响遍历性能，推荐使用
         mCalendarView.setSchemeDate(map);
     }
@@ -162,10 +148,10 @@ public class FullActivity extends BaseActivity implements
         mTextLunar.setText(calendar.getLunar());
         mYear = calendar.getYear();
 
-        Log.e("onDateSelected", "  -- " + calendar.getYear() +
-                "  --  " + calendar.getMonth() +
-                "  -- " + calendar.getDay() +
-                "  --  " + isClick + "  --   " + calendar.getScheme());
+//        Log.e("onDateSelected", "  -- " + calendar.getYear() +
+//                "  --  " + calendar.getMonth() +
+//                "  -- " + calendar.getDay() +
+//                "  --  " + isClick + "  --   " + calendar.getScheme());
     }
 
     @Override

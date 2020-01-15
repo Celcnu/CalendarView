@@ -59,13 +59,15 @@ public class SimpleActivity extends BaseActivity implements
     @Override
     protected void initView() {
         setStatusBarDarkMode();
-        mTextMonthDay = findViewById(R.id.tv_month_day);
-        mTextYear = findViewById(R.id.tv_year);
-        mTextLunar = findViewById(R.id.tv_lunar);
-        mRelativeTool = findViewById(R.id.rl_tool);
-        mCalendarView = findViewById(R.id.calendarView);
-        mTextCurrentDay = findViewById(R.id.tv_current_day);
+        mTextMonthDay = findViewById(R.id.tv_month_day);  //左上角 x月x日
+        mTextYear = findViewById(R.id.tv_year);   // 左上角 x年
+        mTextLunar = findViewById(R.id.tv_lunar);  // 今日
+        mRelativeTool = findViewById(R.id.rl_tool);  // layout
+        mCalendarView = findViewById(R.id.calendarView); // 主日历视图
+        mTextCurrentDay = findViewById(R.id.tv_current_day); // ？
         mTextMonthDay.setOnClickListener(new View.OnClickListener() {
+            // TODO
+            // 点击查看全年 有bug 无法返回
             @Override
             public void onClick(View v) {
                 if (!mCalendarLayout.isExpand()) {
@@ -78,7 +80,9 @@ public class SimpleActivity extends BaseActivity implements
                 mTextMonthDay.setText(String.valueOf(mYear));
             }
         });
-        findViewById(R.id.fl_current).setOnClickListener(new View.OnClickListener() {
+
+        // 右上角图标：点击定位到今天
+        mRelativeTool.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mCalendarView.scrollToCurrent();
@@ -88,16 +92,20 @@ public class SimpleActivity extends BaseActivity implements
         mCalendarLayout = findViewById(R.id.calendarLayout);
         mCalendarView.setOnYearChangeListener(this);
         mCalendarView.setOnCalendarSelectListener(this);
-        mTextYear.setText(String.valueOf(mCalendarView.getCurYear()));
         mYear = mCalendarView.getCurYear();
+
+        //左上角设置
+        mTextYear.setText(String.valueOf(mCalendarView.getCurYear()));
         mTextMonthDay.setText(mCalendarView.getCurMonth() + "月" + mCalendarView.getCurDay() + "日");
         mTextLunar.setText("今日");
-        mTextCurrentDay.setText(String.valueOf(mCalendarView.getCurDay()));
-        mRecyclerView = findViewById(R.id.recyclerView);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.addItemDecoration(new GroupItemDecoration<String,Article>());
-        mRecyclerView.setAdapter(new ArticleAdapter(this));
-        mRecyclerView.notifyDataSetChanged();
+        mTextCurrentDay.setText(String.valueOf(mCalendarView.getCurDay())); // ？
+
+        // 底部文章  TODO: 后期改为当日事件列表
+//        mRecyclerView = findViewById(R.id.recyclerView);
+//        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        mRecyclerView.addItemDecoration(new GroupItemDecoration<String,Article>());
+//        mRecyclerView.setAdapter(new ArticleAdapter(this));
+//        mRecyclerView.notifyDataSetChanged();
     }
 
     @Override
@@ -106,6 +114,8 @@ public class SimpleActivity extends BaseActivity implements
         int year = mCalendarView.getCurYear();
         int month = mCalendarView.getCurMonth();
 
+//        int year, int month, int day, int color, String text
+        //  ???
         Map<String, Calendar> map = new HashMap<>();
         map.put(getSchemeCalendar(year, month, 3, 0xFF40db25, "假").toString(),
                 getSchemeCalendar(year, month, 3, 0xFF40db25, "假"));
@@ -131,6 +141,7 @@ public class SimpleActivity extends BaseActivity implements
     }
 
 
+    // TODO： ？？
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -150,12 +161,12 @@ public class SimpleActivity extends BaseActivity implements
     }
 
     private Calendar getSchemeCalendar(int year, int month, int day, int color, String text) {
-        Calendar calendar = new Calendar();
+        Calendar calendar = new Calendar(); // 自定义类
         calendar.setYear(year);
         calendar.setMonth(month);
         calendar.setDay(day);
         calendar.setSchemeColor(color);//如果单独标记颜色、则会使用这个颜色
-        calendar.setScheme(text);
+        calendar.setScheme(text); // ?
         return calendar;
     }
 

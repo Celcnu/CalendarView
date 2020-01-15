@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.View;
 
 import com.haibin.calendarview.Calendar;
@@ -28,13 +29,16 @@ public class FullMonthView extends MonthView {
     public FullMonthView(Context context) {
         super(context);
 
+        Log.i("chaoyc","FullMonthView");
+
         mRectPaint.setStyle(Paint.Style.STROKE);
         mRectPaint.setStrokeWidth(dipToPx(context, 0.5f));
         mRectPaint.setColor(0x88efefef);
 
         mSchemeBasicPaint.setAntiAlias(true);
         mSchemeBasicPaint.setStyle(Paint.Style.FILL);
-        mSchemeBasicPaint.setTextAlign(Paint.Align.CENTER);
+        mSchemeBasicPaint.setTextAlign(Paint.Align.CENTER); // ??
+        //mSchemeBasicPaint.setTextAlign(Paint.Align.LEFT);
         mSchemeBasicPaint.setFakeBoldText(true);
 
         //兼容硬件加速无效的代码
@@ -104,25 +108,33 @@ public class FullMonthView extends MonthView {
     @Override
     protected void onDrawText(Canvas canvas, Calendar calendar, int x, int y, boolean hasScheme, boolean isSelected) {
         canvas.drawRect(x, y, x + mItemWidth, y + mItemHeight, mRectPaint);
-        int cx = x + mItemWidth / 2;
-        int top = y - mItemHeight / 6;
+        int cx = x + mItemWidth / 3; // 文本x坐标
+        int top = y - mItemHeight / 3; // y坐标 Base基本是H/2
+//        Log.i("chaoyc","y : " + y);
+//        Log.i("chaoyc","top : " + top);
 
         boolean isInRange = isInRange(calendar);
 
-        if (isSelected) {
+        // line1：阳历
+        // line2: 农历
+        if (isSelected) { // 设置绘制坐标 调用paint绘制内容
             canvas.drawText(String.valueOf(calendar.getDay()), cx, mTextBaseLine + top,
                     mSelectTextPaint);
-            canvas.drawText(calendar.getLunar(), cx, mTextBaseLine + y + mItemHeight / 10, mSelectedLunarTextPaint);
-        } else if (hasScheme) {
+            canvas.drawText(calendar.getLunar(), cx, mTextBaseLine + y - mItemHeight / 6, mSelectedLunarTextPaint);
+        } else if (hasScheme) { // 有事件
             canvas.drawText(String.valueOf(calendar.getDay()), cx, mTextBaseLine + top,
                     calendar.isCurrentMonth() && isInRange ? mSchemeTextPaint : mOtherMonthTextPaint);
 
-            canvas.drawText(calendar.getLunar(), cx, mTextBaseLine + y + mItemHeight / 10, mCurMonthLunarTextPaint);
-        } else {
+            canvas.drawText(calendar.getLunar(), cx, mTextBaseLine + y - mItemHeight / 6, mCurMonthLunarTextPaint);
+        } else { // 普通
+
+            // 阳历
             canvas.drawText(String.valueOf(calendar.getDay()), cx, mTextBaseLine + top,
                     calendar.isCurrentDay() ? mCurDayTextPaint :
                             calendar.isCurrentMonth() && isInRange ? mCurMonthTextPaint : mOtherMonthTextPaint);
-            canvas.drawText(calendar.getLunar(), cx, mTextBaseLine + y + mItemHeight / 10,
+
+            // 农历
+            canvas.drawText(calendar.getLunar(), cx, mTextBaseLine + y - mItemHeight / 6,
                     calendar.isCurrentDay() && isInRange ? mCurDayLunarTextPaint :
                             calendar.isCurrentMonth() ? mCurMonthLunarTextPaint : mOtherMonthLunarTextPaint);
         }

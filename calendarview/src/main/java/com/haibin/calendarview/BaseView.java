@@ -21,6 +21,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -133,7 +134,7 @@ public abstract class BaseView extends View implements View.OnClickListener, Vie
     boolean isClick = true;
 
     /**
-     * 字体大小
+     * 字体大小  主显示的日期数字 ? 更改不生效？
      */
     static final int TEXT_SIZE = 14;
 
@@ -157,18 +158,26 @@ public abstract class BaseView extends View implements View.OnClickListener, Vie
      * @param context context
      */
     private void initPaint(Context context) {
+        Log.i("chaoyc","initPaint(Context context) called.");
+
+        // 设置绘制字体/颜色等
+        // TODO: 分别绘制哪一部分？
+
+        // 本月日期
         mCurMonthTextPaint.setAntiAlias(true);
         mCurMonthTextPaint.setTextAlign(Paint.Align.CENTER);
-        mCurMonthTextPaint.setColor(0xFF111111);
+        mCurMonthTextPaint.setColor(0xFF111111); // 黑
         mCurMonthTextPaint.setFakeBoldText(true);
         mCurMonthTextPaint.setTextSize(CalendarUtil.dipToPx(context, TEXT_SIZE));
 
+        // 其余月份 前后
         mOtherMonthTextPaint.setAntiAlias(true);
         mOtherMonthTextPaint.setTextAlign(Paint.Align.CENTER);
-        mOtherMonthTextPaint.setColor(0xFFe1e1e1);
+        mOtherMonthTextPaint.setColor(0xFFe1e1e1); // 灰
         mOtherMonthTextPaint.setFakeBoldText(true);
         mOtherMonthTextPaint.setTextSize(CalendarUtil.dipToPx(context, TEXT_SIZE));
 
+        // 农历？？？
         mCurMonthLunarTextPaint.setAntiAlias(true);
         mCurMonthLunarTextPaint.setTextAlign(Paint.Align.CENTER);
 
@@ -189,6 +198,7 @@ public abstract class BaseView extends View implements View.OnClickListener, Vie
         mSchemeTextPaint.setFakeBoldText(true);
         mSchemeTextPaint.setTextSize(CalendarUtil.dipToPx(context, TEXT_SIZE));
 
+        //选中的日期框
         mSelectTextPaint.setAntiAlias(true);
         mSelectTextPaint.setStyle(Paint.Style.FILL);
         mSelectTextPaint.setTextAlign(Paint.Align.CENTER);
@@ -201,6 +211,7 @@ public abstract class BaseView extends View implements View.OnClickListener, Vie
         mSchemePaint.setStrokeWidth(2);
         mSchemePaint.setColor(0xffefefef);
 
+        //  今天
         mCurDayTextPaint.setAntiAlias(true);
         mCurDayTextPaint.setTextAlign(Paint.Align.CENTER);
         mCurDayTextPaint.setColor(Color.RED);
@@ -227,15 +238,18 @@ public abstract class BaseView extends View implements View.OnClickListener, Vie
      * @param delegate delegate
      */
    final void setup(CalendarViewDelegate delegate) {
+       Log.i("chaoyc","stup called. ");
         this.mDelegate = delegate;
         updateStyle();
         updateItemHeight();
 
         initPaint();
+
     }
 
 
     final void updateStyle(){
+        Log.i("chaoyc","updateStyle() called. ");
         if(mDelegate == null){
             return;
         }
@@ -267,10 +281,14 @@ public abstract class BaseView extends View implements View.OnClickListener, Vie
     }
 
     @SuppressWarnings("IntegerDivisionInFloatingPointContext")
+
     void updateItemHeight() {
+        Log.i("chaoyc","updateIH() called. ");
         this.mItemHeight = mDelegate.getCalendarItemHeight();
+        //Log.i("chaoyc","mItemHeight : " + this.mItemHeight);
         Paint.FontMetrics metrics = mCurMonthTextPaint.getFontMetrics();
         mTextBaseLine = mItemHeight / 2 - metrics.descent + (metrics.bottom - metrics.top) / 2;
+        //Log.i("chaoyc","mTextBaseLine : " + this.mTextBaseLine);
     }
 
 

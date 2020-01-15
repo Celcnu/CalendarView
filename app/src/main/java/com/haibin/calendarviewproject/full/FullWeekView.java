@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.View;
 
 import com.haibin.calendarview.Calendar;
@@ -23,6 +24,8 @@ public class FullWeekView extends WeekView {
 
     public FullWeekView(Context context) {
         super(context);
+        // 没有调用过
+        Log.i("chaoyc","FullWeekView");
 
         mRectPaint.setStyle(Paint.Style.STROKE);
         mRectPaint.setStrokeWidth(dipToPx(context, 0.5f));

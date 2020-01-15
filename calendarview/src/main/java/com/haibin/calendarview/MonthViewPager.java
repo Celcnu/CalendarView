@@ -18,6 +18,7 @@ package com.haibin.calendarview;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -624,6 +625,7 @@ public final class MonthViewPager extends ViewPager {
                 e.printStackTrace();
                 return new DefaultMonthView(getContext());
             }
+            Log.i("chaoyc","MonthViewPager setup called. ");
             view.mMonthViewPager = MonthViewPager.this;
             view.mParentLayout = mParentLayout;
             view.setup(mDelegate);

@@ -21,6 +21,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
@@ -86,6 +87,8 @@ public class CalendarView extends FrameLayout {
 
     public CalendarView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+
+        Log.i("chaoyc","CalendarView");
         mDelegate = new CalendarViewDelegate(context, attrs);
         init(context);
     }
@@ -98,9 +101,12 @@ public class CalendarView extends FrameLayout {
     private void init(Context context) {
         LayoutInflater.from(context).inflate(R.layout.cv_layout_calendar_view, this, true);
         FrameLayout frameContent = findViewById(R.id.frameContent);
+
+        // WeekViewPager
         this.mWeekPager = findViewById(R.id.vp_week);
         this.mWeekPager.setup(mDelegate);
 
+        // WeekBar ?
         try {
             Constructor constructor = mDelegate.getWeekBarClass().getConstructor(Context.class);
             mWeekBar = (WeekBar) constructor.newInstance(getContext());
@@ -114,6 +120,7 @@ public class CalendarView extends FrameLayout {
 
         this.mWeekLine = findViewById(R.id.line);
         this.mWeekLine.setBackgroundColor(mDelegate.getWeekLineBackground());
+
         LayoutParams lineParams = (LayoutParams) this.mWeekLine.getLayoutParams();
         lineParams.setMargins(mDelegate.getWeekLineMargin(),
                 mDelegate.getWeekBarHeight(),
